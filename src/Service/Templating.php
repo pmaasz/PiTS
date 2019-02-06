@@ -7,7 +7,7 @@
  * License MIT
  */
 
-require_once 'Singleton.php';
+Namespace App\Service;
 
 /**
  * Class Templating
@@ -17,21 +17,18 @@ class Templating
     use Singleton;
 
     /**
-     * @param $template
      * @param array $parameters
      *
      * @return string
      */
-    public function render($template, array $parameters = array())
+    public function render(array $parameters = array())
     {
         ob_start();
         extract($parameters);
 
         $content = __DIR__ . '/../templates/index.php';
-
         $content = ob_get_clean();
 
         return $content;
-
     }
 }

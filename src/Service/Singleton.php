@@ -7,6 +7,8 @@
  * License MIT
  */
 
+Namespace App\Service;
+
 /**
  * Trait Singleton
  */

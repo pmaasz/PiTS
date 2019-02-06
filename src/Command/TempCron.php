@@ -7,6 +7,9 @@
  * License
  */
 
+/**
+ * Class TempCron
+ */
 class TempCron
 {
 

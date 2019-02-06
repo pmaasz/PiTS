@@ -7,6 +7,13 @@
  * License
  */
 
+Namespace App\Driver;
+
+/**
+ * Class CSVDriver
+ *
+ * @package PiTS\Driver
+ */
 class CSVDriver
 {
     /**

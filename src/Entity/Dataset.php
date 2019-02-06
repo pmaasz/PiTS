@@ -7,6 +7,8 @@
  * License MIT
  */
 
+Namespace App\Entity;
+
 /**
  * Class Dataset
  */
@@ -31,6 +33,11 @@ class Dataset
      * @var int
      */
     private $createDate;
+
+    /**
+     * @var int
+     */
+    private $writeDate;
 
     /**
      * @return int
@@ -94,5 +101,21 @@ class Dataset
     public function setCreateDate($createDate)
     {
         $this->createDate = $createDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWriteDate()
+    {
+        return $this->writeDate;
+    }
+
+    /**
+     * @param int $writeDate
+     */
+    public function setWriteDate($writeDate)
+    {
+        $this->writeDate = $writeDate;
     }
 }

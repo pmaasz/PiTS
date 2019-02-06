@@ -1,0 +1,23 @@
+{
+    "name": "pmaasz/PiTS",
+    "description": "Temperature Readout",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Philip Maaß",
+            "email": "PhilipMaasz@aol.com"
+        }
+    ],
+
+    "require": {
+        "symfony/routing": "^4.2",
+        "symfony/http-foundation": "^4.2"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

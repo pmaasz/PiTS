@@ -7,6 +7,8 @@
  * License
  */
 
+Namespace App\Service;
+
 class ConfigService
 {
 
@@ -33,7 +35,7 @@ class ConfigService
     public function load($file)
     {
         if(!file_exists($file)) {
-            throw new UnexpectedValueException(
+            throw new \UnexpectedValueException(
                 \sprintf("The configuration file '%s' does not exists", $file)
             );
         }

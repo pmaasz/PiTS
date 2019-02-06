@@ -7,20 +7,21 @@
  * License
  */
 
+Namespace App\Repository;
+
+/**
+ * Class DatasetRepository
+ *
+ * @package PiTS\Repository
+ */
 class DatasetRepository
 {
-
     public function insert()
     {
 
     }
 
     public function findAll()
-    {
-
-    }
-
-    public function findBy()
     {
 
     }

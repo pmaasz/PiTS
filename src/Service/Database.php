@@ -7,7 +7,7 @@
  * License MIT
  */
 
-require_once 'Singleton.php';
+Namespace App\Service;
 
 /**
  * Class Database
@@ -16,14 +16,14 @@ class Database
 {
     use Singleton;
 
-    const DB_DRIVER = 'mysql';
-    const DB_HOST = 'localhost';
-    const DB_USER = 'root';
-    const DB_PASSWORD = 'gue55me';
-    const DB_NAME = 'example';
+    const DB_DRIVER = '';
+    const DB_HOST = '';
+    const DB_USER = '';
+    const DB_PASSWORD = '';
+    const DB_NAME = '';
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $connection;
 
@@ -32,7 +32,7 @@ class Database
      */
     private function connect()
     {
-        $this->connection = new PDO($this->getDSN(), self::DB_USER, self::DB_PASSWORD);
+        $this->connection = new \PDO($this->getDSN(), self::DB_USER, self::DB_PASSWORD);
     }
 
     /**
@@ -70,7 +70,7 @@ class Database
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**

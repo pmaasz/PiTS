@@ -1,3 +1,7 @@
 /.idea/
-/config/database.yaml
+/config/
+/src/Service/ConfigService.php
+/src/Service/Database.php
 /csv/
+/.DS_Store
+/vendor/

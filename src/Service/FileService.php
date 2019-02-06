@@ -7,6 +7,8 @@
  * License
  */
 
+Namespace App\Service;
+
 class FileService
 {
     /**

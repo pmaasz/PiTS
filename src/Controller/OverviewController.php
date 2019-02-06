@@ -7,11 +7,26 @@
  * License
  */
 
+Namespace App\Controller;
+
+use App\Service\Templating;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * Class OverviewController
+ *
+ * @package PiTS\Controller
+ */
 class OverviewController
 {
-    public function indexAction()
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function indexAction(Request $request)
     {
-
+       return new Response(Templating::getInstance()->render([]));
     }
 
     public function createAction()

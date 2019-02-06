@@ -7,11 +7,18 @@
  * License
  */
 
-require_once __DIR__ . '/../Driver/CSVDriver.php';
+Namespace App\Service;
 
+use App\Driver\CSVDriver;
+
+/**
+ * Class ExportService
+ *
+ * @package PiTS\Service
+ */
 class ExportService
 {
-    const TARGET_DIR = __DIR__ . '/../../assets/exports/';
+    const TARGET_DIR = __DIR__ . '/../../downloads';
     const FILE_FORMAT = 'Y-m-d_H-i-s_';
 
     /**
