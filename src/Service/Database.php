@@ -9,6 +9,8 @@
 
 Namespace App\Service;
 
+use PDO;
+
 /**
  * Class Database
  */
@@ -16,14 +18,8 @@ class Database
 {
     use Singleton;
 
-    const DB_DRIVER = '';
-    const DB_HOST = '';
-    const DB_USER = '';
-    const DB_PASSWORD = '';
-    const DB_NAME = '';
-
     /**
-     * @var \PDO
+     * @var PDO
      */
     private $connection;
 
@@ -32,7 +28,8 @@ class Database
      */
     private function connect()
     {
-        $this->connection = new \PDO($this->getDSN(), self::DB_USER, self::DB_PASSWORD);
+        $config = ConfigService::getInstance()->get('database');
+        $this->connection = new PDO($this->getDSN($config), $config['user'], $config['password']);
     }
 
     /**
@@ -70,7 +67,7 @@ class Database
 
         $statement->execute();
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -82,10 +79,14 @@ class Database
     }
 
     /**
+     * Create an DSN for the PDO object.
+     *
+     * @param array $config
+     *
      * @return string
      */
-    private function getDSN()
+    private function getDSN($config)
     {
-        return sprintf("%s:host=%s;dbname=%s", self::DB_DRIVER, self::DB_HOST, self::DB_NAME);
+        return sprintf("%s:host=%s;dbname=%s", $config['driver'], $config['host'], $config['name']);
     }
 }
