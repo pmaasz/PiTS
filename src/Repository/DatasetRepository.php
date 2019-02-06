@@ -9,6 +9,10 @@
 
 Namespace App\Repository;
 
+use App\Entity\Dataset;
+use App\Service\Database;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class DatasetRepository
  *
@@ -16,23 +20,70 @@ Namespace App\Repository;
  */
 class DatasetRepository
 {
-    public function insert()
+    /**
+     * @param Dataset $dataset
+     *
+     * @return mixed
+     */
+    public function insert(Dataset $dataset)
     {
-
+        return Database::getInstance()->insert("INSERT INTO dataset SET tempIn = :tempIn, tempOut = :tempOut, createDate = :createDate, writeDate = :writeDate",
+            [
+                'tempIn' => $dataset->getTempIn(),
+                'tempOut' => $dataset->getTempOut(),
+                'createDate' => $dataset->getCreateDate(),
+                'writeDate' => $dataset->getWriteDate(),
+            ]);
     }
 
+    /**
+     * @return array
+     */
     public function findAll()
     {
+        $result = Database::getInstance()->query("SELECT * FROM dataset SORT BY createDate");
+        $datasets = [];
 
+        foreach($result as $data)
+        {
+            $dataset = $this->arrayToObject($data);
+            $datasets[] = $dataset;
+        }
+
+        return $datasets;
     }
 
-    public function persist()
+    /**
+     * @param Request $request
+     * @param Dataset $dataset
+     *
+     * @return Dataset
+     */
+    public function buildFromPost(Request $request, Dataset $dataset)
     {
+        $dataset->setTempIn(strip_tags($request->get('tempIn')));
+        $dataset->setTempOut(strip_tags($request->get('tempOut')));
+        $dataset->setCreateDate(strip_tags($request->get('createDate')));
+        $dataset->setWriteDate(strip_tags($request->get('writeDate')));
 
+        return $dataset;
     }
 
-    public function arrayToObject()
+    /**
+     * @param $data
+     *
+     * @return Dataset
+     */
+    public function arrayToObject($data)
     {
+        $issue = new Dataset();
 
+        $issue->setId($data['id']);
+        $issue->setTempIn($data['tempIn']);
+        $issue->setTempOut($data['tempOut']);
+        $issue->setCreateDate($data['createDate']);
+        $issue->setWriteDate($data['writeDate']);
+
+        return $issue;
     }
 }

@@ -9,6 +9,7 @@
 
 Namespace App\Controller;
 
+use App\Repository\DatasetRepository;
 use App\Service\Templating;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,20 +22,38 @@ use Symfony\Component\HttpFoundation\Response;
 class OverviewController
 {
     /**
+     * @var DatasetRepository
+     */
+    private $datasetRepository;
+
+    /**
+     * OverviewController constructor.
+     */
+    public function __construct()
+    {
+        $this->datasetRepository = new DatasetRepository();
+    }
+
+    /**
      * @param Request $request
+     *
      * @return Response
      */
     public function indexAction(Request $request)
     {
-       return new Response(Templating::getInstance()->render([]));
+        $datasets = $this->datasetRepository->findAll();
+
+        return new Response(Templating::getInstance()->render([
+            'datasets' => $datasets
+        ]));
     }
 
-    public function createAction()
+    public function createAction(Request $request)
     {
 
     }
 
-    public function downloadAction()
+    public function downloadAction(Request $request)
     {
 
     }
