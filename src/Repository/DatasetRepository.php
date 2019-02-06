@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class DatasetRepository
  *
- * @package PiTS\Repository
+ * @package App\Repository
  */
 class DatasetRepository
 {

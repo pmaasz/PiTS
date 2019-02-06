@@ -1,6 +1,6 @@
 {
     "database": {
-        "driver": "pdo_mysql",
+        "driver": "mysql",
         "user": "root",
         "password": "",
         "dbname": "pits",

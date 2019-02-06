@@ -12,7 +12,7 @@ Namespace App\Driver;
 /**
  * Class CSVDriver
  *
- * @package PiTS\Driver
+ * @package App\Driver
  */
 class CSVDriver
 {

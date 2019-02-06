@@ -17,16 +17,18 @@ class Templating
     use Singleton;
 
     /**
+     * @param $template
      * @param array $parameters
      *
      * @return string
      */
-    public function render(array $parameters = array())
+    public function render($template, array $parameters = array())
     {
         ob_start();
         extract($parameters);
 
-        $content = __DIR__ . '/../templates/index.php';
+        include __DIR__ . '/../../templates/' . $template;
+
         $content = ob_get_clean();
 
         return $content;

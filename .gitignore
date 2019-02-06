@@ -1,5 +1,5 @@
 /.idea/
-/config/
+/config/database.json
 /src/Service/ConfigService.php
 /src/Service/Database.php
 /csv/

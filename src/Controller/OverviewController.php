@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class OverviewController
  *
- * @package PiTS\Controller
+ * @package App\Controller
  */
 class OverviewController
 {
@@ -35,15 +35,13 @@ class OverviewController
     }
 
     /**
-     * @param Request $request
-     *
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $datasets = $this->datasetRepository->findAll();
 
-        return new Response(Templating::getInstance()->render([
+        return new Response(Templating::getInstance()->render('overview.php', [
             'datasets' => $datasets
         ]));
     }

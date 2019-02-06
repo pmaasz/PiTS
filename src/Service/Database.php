@@ -29,7 +29,7 @@ class Database
     private function connect()
     {
         $config = ConfigService::getInstance()->get('database');
-        $this->connection = new PDO($this->getDSN($config), $config['user'], $config['password']);
+        $this->connection = new \PDO($this->getDSN($config), $config['user'], $config['password']);
     }
 
     /**
@@ -87,6 +87,6 @@ class Database
      */
     private function getDSN($config)
     {
-        return sprintf("%s:host=%s;dbname=%s", $config['driver'], $config['host'], $config['name']);
+        return sprintf("%s:host=%s;dbname=%s", $config['driver'], $config['host'], $config['dbname']);
     }
 }
