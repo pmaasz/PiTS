@@ -12,7 +12,7 @@ Namespace App\Controller;
 use App\Repository\DatasetRepository;
 use App\Service\ExportService;
 use App\Service\Templating;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -66,6 +66,8 @@ class OverviewController
 
             $this->exportService->export($datasets, $fileName);
 
+            var_dump($fileName);exit;
+
             $filePath = ExportService::TARGET_DIR;
             $fileSize = filesize($filePath . $fileName);
             $mimeType = 'text/csv';
@@ -80,9 +82,9 @@ class OverviewController
             header("Content-Length: " . $fileSize);
             readfile($filePath.$fileName);
 
-            return new Response('');
+            return new RedirectResponse('index.php');
         }
 
-        return false;
+        return new RedirectResponse('index.php');
     }
 }

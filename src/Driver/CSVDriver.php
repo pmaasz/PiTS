@@ -25,13 +25,11 @@ class CSVDriver
         ob_start();
 
         $header = array(
-            "EventID",
-            "Timestamp",
-            "IssueID",
-            "Label Name",
-            "Source",
-            "Target",
-            "Event",
+            "ID",
+            "TempIn",
+            "TempOut",
+            "createDate",
+            "writeDate",
         );
         $csv = fopen($filePath, 'w');
 

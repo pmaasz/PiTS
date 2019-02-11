@@ -41,7 +41,7 @@ class DatasetRepository
      */
     public function findAll()
     {
-        $result = Database::getInstance()->query("SELECT * FROM dataset SORT BY createDate");
+        $result = Database::getInstance()->query("SELECT * FROM dataset");
         $datasets = [];
 
         foreach($result as $data)

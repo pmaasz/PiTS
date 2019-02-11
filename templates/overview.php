@@ -37,9 +37,9 @@
 
 <div class="container">
     <div class="export-button">
-        <button class="btn shadow" id="export" data-export="index.php?controller=OverviewController&action=downloadAction">
+        <a class="btn shadow" id="export" href="index.php?controller=OverviewController&action=downloadAction" role="button">
             <i class="fas fa-cloud-download-alt"></i>
-        </button>
+        </a>
     </div>
 
     <canvas>

@@ -18,7 +18,7 @@ use App\Driver\CSVDriver;
  */
 class ExportService
 {
-    const TARGET_DIR = __DIR__ . '/../../downloads';
+    const CSV_DIR = __DIR__ . '/../../downloads/csv/';
     const FILE_FORMAT = 'Y-m-d_H-i-s_';
 
     /**
@@ -48,13 +48,13 @@ class ExportService
     }
 
     /**
-     * @param $evenLogEntries
+     * @param $datasets
      * @param $fileName
      */
-    public function export($evenLogEntries, $fileName)
+    public function export($datasets, $fileName)
     {
         //$this->filesService->createDirectory(self::TARGET_DIR.$fileName);
-        $this->csvDriver->export($evenLogEntries, self::TARGET_DIR . $fileName);
+        $this->csvDriver->export($datasets, self::CSV_DIR . $fileName);
         // $this->filesService->deleteDirectory(self::TARGET_DIR.$fileName);
     }
 
