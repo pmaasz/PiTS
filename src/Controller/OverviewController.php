@@ -10,6 +10,7 @@
 Namespace App\Controller;
 
 use App\Repository\DatasetRepository;
+use App\Service\ExportService;
 use App\Service\Templating;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +28,17 @@ class OverviewController
     private $datasetRepository;
 
     /**
+     * @var ExportService
+     */
+    private $exportService;
+
+    /**
      * OverviewController constructor.
      */
     public function __construct()
     {
         $this->datasetRepository = new DatasetRepository();
+        $this->exportService = new ExportService();
     }
 
     /**
@@ -46,13 +53,36 @@ class OverviewController
         ]));
     }
 
-    public function createAction(Request $request)
+    /**
+     * @return bool|Response
+     */
+    public function downloadAction()
     {
+        $datasets = $this->datasetRepository->findAll();
 
-    }
+        if ($datasets)
+        {
+            $fileName = date(ExportService::FILE_FORMAT) . '.csv';
 
-    public function downloadAction(Request $request)
-    {
+            $this->exportService->export($datasets, $fileName);
 
+            $filePath = ExportService::TARGET_DIR;
+            $fileSize = filesize($filePath . $fileName);
+            $mimeType = 'text/csv';
+
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private",false);
+            header("Content-Type: $mimeType");
+            header('Content-Disposition: attachment; filename="'. $fileName .'"');
+            header("Content-Transfer-Encoding: binary");
+            header("Content-Length: " . $fileSize);
+            readfile($filePath.$fileName);
+
+            return new Response('');
+        }
+
+        return false;
     }
 }

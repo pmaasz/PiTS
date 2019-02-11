@@ -54,22 +54,6 @@ class DatasetRepository
     }
 
     /**
-     * @param Request $request
-     * @param Dataset $dataset
-     *
-     * @return Dataset
-     */
-    public function buildFromPost(Request $request, Dataset $dataset)
-    {
-        $dataset->setTempIn(strip_tags($request->get('tempIn')));
-        $dataset->setTempOut(strip_tags($request->get('tempOut')));
-        $dataset->setCreateDate(strip_tags($request->get('createDate')));
-        $dataset->setWriteDate(strip_tags($request->get('writeDate')));
-
-        return $dataset;
-    }
-
-    /**
      * @param $data
      *
      * @return Dataset
