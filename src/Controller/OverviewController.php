@@ -66,9 +66,7 @@ class OverviewController
 
             $this->exportService->export($datasets, $fileName);
 
-            var_dump($fileName);exit;
-
-            $filePath = ExportService::TARGET_DIR;
+            $filePath = ExportService::CSV_DIR;
             $fileSize = filesize($filePath . $fileName);
             $mimeType = 'text/csv';
 
@@ -82,9 +80,9 @@ class OverviewController
             header("Content-Length: " . $fileSize);
             readfile($filePath.$fileName);
 
-            return new RedirectResponse('index.php');
+            return new Response('');
         }
 
-        return new RedirectResponse('index.php');
+        return new Response('');
     }
 }
