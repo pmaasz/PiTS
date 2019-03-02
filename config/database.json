@@ -1,9 +1,0 @@
-{
-    "database": {
-        "driver": "mysql",
-        "user": "root",
-        "password": "",
-        "dbname": "pits",
-        "host": "localhost"
-    }
-}

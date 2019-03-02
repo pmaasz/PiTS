@@ -4,14 +4,18 @@
  * Author: Philip Maaß
  * Date: 07.01.19
  * Time: 20:18
- * License
+ * License:
  */
 
 Namespace App\Service;
 
+/**
+ * Class ConfigService
+ *
+ * @package App\Service
+ */
 class ConfigService
 {
-
     use Singleton;
 
     /**
@@ -34,7 +38,8 @@ class ConfigService
      */
     public function load($file)
     {
-        if(!file_exists($file)) {
+        if(!file_exists($file))
+        {
             throw new \UnexpectedValueException(
                 \sprintf("The configuration file '%s' does not exists", $file)
             );

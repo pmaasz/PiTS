@@ -1,5 +1,7 @@
 /.idea/
 /config/database.json
+/config/mailing.json
+/config/sensors.json
 /src/Service/ConfigService.php
 /src/Service/Database.php
 /csv/

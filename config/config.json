@@ -1,0 +1,14 @@
+{
+  "database": {
+    "driver": "mysql",
+    "user": "root",
+    "password": "",
+    "dbname": "pits",
+    "host": "localhost"
+  },
+
+  "sensors":{
+    "temp1": "",
+    "temp2": ""
+  }
+}

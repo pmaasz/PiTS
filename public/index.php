@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\ConfigService;
 
-ConfigService::getInstance()->load(__DIR__ . '/../config/database.json');
+ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
 $configParams = ConfigService::getInstance()->get('database');
 $controllerName = "OverviewController";

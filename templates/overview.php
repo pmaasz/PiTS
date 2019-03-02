@@ -23,6 +23,11 @@
             margin-bottom: 25px;
             margin-top: 25px;
         }
+
+        #export{
+            color: black;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
@@ -37,14 +42,10 @@
 
 <div class="container">
     <div class="export-button">
-        <a class="btn shadow" id="export" href="index.php?controller=OverviewController&action=downloadAction" role="button">
+        <a class="btn shadow" id="export" href="index.php?controller=OverviewController&action=downloadAction">
             <i class="fas fa-cloud-download-alt"></i>
         </a>
     </div>
-
-    <canvas>
-
-    </canvas>
 
     <div class="card shadow">
         <div class="card-header">
@@ -82,20 +83,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script>
-    $(document).on('click', '#export', function(){
-        $.ajax({
-            url: window.location.href + '?action=downloadAction',
-            type: 'POST',
-            success: function() {
-                console.log('success');
-            },
-            error: function (data) {
-                console.error(data);
-            }
-        });
-    })
-</script>
 </body>
 </html>
