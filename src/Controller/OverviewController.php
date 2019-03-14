@@ -12,7 +12,6 @@ Namespace App\Controller;
 use App\Repository\DatasetRepository;
 use App\Service\ExportService;
 use App\Service\Templating;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

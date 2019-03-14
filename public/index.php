@@ -17,7 +17,6 @@ use App\Service\ConfigService;
 
 ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
-$configParams = ConfigService::getInstance()->get('database');
 $controllerName = "OverviewController";
 $actionName = "indexAction";
 
@@ -32,7 +31,7 @@ if(isset($_GET['action']))
 }
 
 $request = Request::createFromGlobals();
-$overviewController = 'OverviewController';
+
 /** @var mixed $controller */
 $controllerName = 'App\\Controller\\' . $controllerName;
 /** @var mixed $controller */
