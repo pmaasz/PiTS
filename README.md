@@ -29,3 +29,9 @@ Then run the following command in the docroot of this project:
 ````bash
 composer install
 ````
+
+### possible new features: 
+- no more composer by adding an autoloader to the project
+- a docker environment
+- setup service to create the database and to detect the sensors
+- different sensor support
