@@ -15,7 +15,7 @@ foreach($sensors as $key => $sensor)
 {
     if($sensor === "w1_bus_master1")
     {
-        unset($sensor($key));
+        unset($sensor[$key]);
     }
 }
 
