@@ -8,7 +8,9 @@
  */
 
 $createDate = date('Y-m-d H:i:s');
-$sensors = escapeshellcmd('ls /sys/bus/w1/devices/'); //ConfigService::getInstance()->get('sensors');
+
+exec(escapeshellarg('ls /sys/bus/w1/devices/'), $sensors); //ConfigService::getInstance()->get('sensors');
+
 $sensors = explode('', $sensors);
 $therms = array();
 
@@ -25,7 +27,7 @@ $file = fopen(__DIR__ . '/files/temp/measurement', 'a+');
 
 foreach($therms as $key => $sensor)
 {
-    $parameters['tmp' . $key] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave') / 1000;
+    $parameters['tmp' . $key] = exec(escapeshellarg('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave'), $temperature) / 1000;
 }
 
 /**
