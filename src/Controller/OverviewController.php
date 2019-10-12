@@ -9,6 +9,7 @@
 
 Namespace App\Controller;
 
+use App\Entity\Dataset;
 use App\Repository\DatasetRepository;
 use App\Service\ExportService;
 use App\Service\Templating;
@@ -45,7 +46,7 @@ class OverviewController
      */
     public function indexAction()
     {
-        $datasets = $this->datasetRepository->findAll();
+        $datasets = $this->getDatasets();
 
         return new Response(Templating::getInstance()->render('overview.php', [
             'datasets' => $datasets
@@ -57,7 +58,7 @@ class OverviewController
      */
     public function downloadAction()
     {
-        $datasets = $this->datasetRepository->findAll();
+        $datasets = $this->getDatasets();
 
         if ($datasets)
         {
@@ -84,4 +85,36 @@ class OverviewController
 
         return new Response('');
     }
+
+    /**
+     * @return array
+     */
+    private function getDatasets()
+    {
+        $measurement = __DIR__ . 'files/temp/measurement';
+        $view = __DIR__ . 'files/temp/view/view';
+
+        escapeshellcmd('cp ' . $measurement . ' ' .$view);
+
+        $measurement = fopen($view, 'r');
+        $results = explode(';', $measurement);
+        $datasets = [];
+
+        foreach($results as $result)
+        {
+            $data = explode(',', $result);
+            $dataset = new Dataset();
+
+            $dataset->setId($data[0]);
+            $dataset->setTempIn($data[1]);
+            $dataset->setTempOut($data[2]);
+            $dataset->setCreateDate($data[3]);
+            $dataset->setWriteDate($data[4]);
+
+            $datasets[] = $dataset;
+        }
+
+        return $datasets;
+    }
+
 }
