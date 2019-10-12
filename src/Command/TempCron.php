@@ -9,7 +9,7 @@
 
 $createDate = date('Y-m-d H:i:s');
 
-exec(escapeshellarg('ls /sys/bus/w1/devices/'), $sensors); //ConfigService::getInstance()->get('sensors');
+$sensors = shell_exec(escapeshellarg('ls /sys/bus/w1/devices'));
 
 $sensors = explode('', $sensors);
 $therms = array();
