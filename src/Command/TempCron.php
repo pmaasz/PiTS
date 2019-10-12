@@ -19,7 +19,7 @@ foreach($sensors as $key => $sensor)
     }
 }
 
-$file = 'measurement.txt';
+$file = '../../files/measurement.txt';
 $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
