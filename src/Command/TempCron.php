@@ -13,8 +13,10 @@ $sensors = preg_split('/\s+/', $sensors);
 
 array_pop($sensors);
 
-$file = fopen(__DIR__ . '/files/temp/measurement', 'a+');
-$content = uniqid().',';
+var_dump($sensors, __DIR__);
+
+$file = fopen(__DIR__ . '../../files/temp/measurement', 'a+');
+$content = uniqid() . ',';
 
 foreach($sensors as $sensor)
 {
