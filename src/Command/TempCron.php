@@ -28,7 +28,7 @@ foreach($sensors as $sensor)
 
     preg_match('/t=\d+/', $result, $matches);
 
-    $content .= $matches[0] / 1000 . ',';
+    $content .= trim($matches[0], 't=') / 1000 . ',';
 }
 
 $content .= $createDate . ',';
