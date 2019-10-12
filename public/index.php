@@ -11,8 +11,7 @@ session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Service\HTTP\Response;
 use App\Service\ConfigService;
 
 ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
