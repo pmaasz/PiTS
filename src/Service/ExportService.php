@@ -18,7 +18,7 @@ use App\Driver\CSVDriver;
  */
 class ExportService
 {
-    const CSV_DIR = __DIR__ . '/../../downloads/csv/';
+    const CSV_DIR = __DIR__ . '/../../files/csv/';
     const FILE_FORMAT = 'Y-m-d_H-i-s_';
 
     /**

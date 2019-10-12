@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\HTTP;
+namespace App\Service\HTTP;
 
 /**
  * Class ResponseRedirect

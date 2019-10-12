@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\HTTP;
+namespace App\Service\HTTP;
 
 use App\Services\HTTP\ResponseInterface;
 
 /**
  * Class Response
  *
- * @package App\Services\HTTP
+ * @package App\Service\HTTP
  */
 class Response implements ResponseInterface
 {

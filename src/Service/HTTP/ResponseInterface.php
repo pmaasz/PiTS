@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\HTTP;
+namespace App\Service\HTTP;
 
 /**
  * Interface ResponseInterface
  *
- * @package App\Services\HTTP
+ * @package App\Service\HTTP
  */
 interface ResponseInterface
 {
