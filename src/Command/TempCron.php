@@ -25,7 +25,7 @@ $content = uniqid() . ',';
 foreach($sensors as $sensor)
 {
     var_dump(shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave'),preg_match('/t=\d+',shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave')) / 1000);
-    $content .= preg_match('/t=\d+',shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave')) / 1000 . ',';
+    $content .= preg_match('/t=\d+/',shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave')) / 1000 . ',';
 }
 
 $content .= $createDate . ',';
