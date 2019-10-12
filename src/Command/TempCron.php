@@ -8,31 +8,19 @@
  */
 
 $createDate = date('Y-m-d H:i:s');
-$sensors = shell_exec(escapeshellarg('ls /sys/bus/w1/devices'));
-var_dump($sensors, shell_exec('ls /sys/bus/w1/devices'));exit;
-$sensors = explode('', $sensors);
-$therms = array();
+$sensors = shell_exec('ls /sys/bus/w1/devices');
+$sensors = preg_split('/\s+/', $sensors);
 
-foreach($sensors as $key => $sensor)
-{
-    $therms['therm'.$key] = $sensor;
-}
-/**
- * TODO sensoren sortieren
- */
-
+array_pop($sensors);
 
 $file = fopen(__DIR__ . '/files/temp/measurement', 'a+');
+$content = uniqid().',';
 
-foreach($therms as $key => $sensor)
+foreach($sensors as $sensor)
 {
-    $parameters['tmp' . $key] = exec(escapeshellarg('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave'), $temperature) / 1000;
+    $content .= shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave') / 1000 . ',';
 }
 
-/**
- * TODO Datei schreiben
- */
-$content = '';
 $content .= $createDate . ',';
 $writeDate = date('Y-m-d H:i:s');
 $content .= $writeDate . ';';
