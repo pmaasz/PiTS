@@ -19,7 +19,7 @@ foreach($sensors as $key => $sensor)
     }
 }
 
-$file = fopen('/var/www/PiTS/files/temp/measurement.txt', 'a+');
+$file = 'measurement.txt';
 $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
@@ -31,7 +31,6 @@ $content .= $createDate . ',';
 $writeDate = date('Y-m-d H:i:s');
 $content .= $writeDate . ';';
 
-fwrite($file, $content);
-fclose($file);
+file_put_contents($file, $content, FILE_APPEND);
 
 exit;
