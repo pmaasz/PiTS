@@ -91,10 +91,10 @@ class OverviewController
      */
     private function getDatasets()
     {
-        $measurement = __DIR__ . 'files/temp/measurement';
-        $view = __DIR__ . 'files/temp/view/view';
+        $measurement = '/var/www/PiTS/files/temp/measurement.txt';
+        $view = '/var/www/PiTS/files/temp/view/view';
 
-        escapeshellcmd('cp ' . $measurement . ' ' .$view);
+        shell_exec('cp ' . $measurement . ' ' . $view);
 
         $measurement = fopen($view, 'r');
         $results = explode(';', $measurement);

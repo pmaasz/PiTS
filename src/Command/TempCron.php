@@ -19,7 +19,7 @@ foreach($sensors as $key => $sensor)
     }
 }
 
-$file = fopen(__DIR__ . '../../files/temp', 'a+');
+$file = fopen('/var/www/PiTS/files/temp/measurement.txt', 'a+');
 $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
