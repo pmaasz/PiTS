@@ -7,27 +7,36 @@
  * License
  */
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+$createDate = date('Y-m-d H:i:s');
+$sensors = escapeshellcmd('ls /sys/bus/w1/devices/'); //ConfigService::getInstance()->get('sensors');
+$sensors = explode('', $sensors);
+$therms = array();
 
-use App\Service\ConfigService;
-
-ConfigService::getInstance()->load(__DIR__ . '/../../config/config.json');
-
-$parameters = [
-    "createDate" => date('Y-m-d H:i:s'),
-];
-$sensors = ConfigService::getInstance()->get('sensors');
-$parameters['tempIn'] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensors['temp1'] . '/w1_slave') / 1000;
-$parameters['tempOut'] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensors['temp2'] . '/w1_slave') / 1000;
-$config = ConfigService::getInstance()->get('database');
-$connection = new PDO(sprintf("%s:host=%s;dbname=%s", $config['driver'], $config['host'], $config['dbname']), $config['user'], $config['password']);
-$query = "INSERT INTO dataset SET tempIn = :tempIn, tempOut = :tempOut, createDate = :createDate, writeDate = :writeDate";
-$statement = $connection->prepare($query);
-$parameters['writeDate'] = date('Y-m-d H:i:s');
-
-foreach($parameters as $key => $value)
+foreach($sensors as $key => $sensor)
 {
-    $statement->bindValue(':' . $key, $value);
+    $therms['therm'.$key] = $sensor;
+}
+/**
+ * TODO sensoren sortieren
+ */
+
+
+$file = fopen(__DIR__ . '/files/temp/measurement', 'a+');
+
+foreach($therms as $key => $sensor)
+{
+    $parameters['tmp' . $key] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave') / 1000;
 }
 
-$statement->execute();
+/**
+ * TODO Datei schreiben
+ */
+$content = '';
+$content .= $createDate . ',';
+$writeDate = date('Y-m-d H:i:s');
+$content .= $writeDate . ';';
+
+fwrite($file, $content);
+fclose($file);
+
+exit;
