@@ -8,3 +8,5 @@
 /.DS_Store
 /vendor/
 /files/csv/
+/files/temp/view/
+/measurement.txt
