@@ -8,9 +8,8 @@
  */
 
 $createDate = date('Y-m-d H:i:s');
-
 $sensors = shell_exec(escapeshellarg('ls /sys/bus/w1/devices'));
-
+var_dump($sensors, shell_exec('ls /sys/bus/w1/devices'));exit;
 $sensors = explode('', $sensors);
 $therms = array();
 
