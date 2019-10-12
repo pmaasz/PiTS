@@ -11,11 +11,19 @@ $createDate = date('Y-m-d H:i:s');
 $sensors = shell_exec('ls /sys/bus/w1/devices');
 $sensors = preg_split('/\s+/', $sensors);
 
-array_pop($sensors);
+foreach($sensors as $key => $sensor)
+{
+    if($sensor === "w1_bus_master1")
+    {
+        unset($sensor($key));
+    }
+}
 
-var_dump($sensors, __DIR__);
+var_dump($sensors);
 
-$file = fopen(__DIR__ . '../../files/temp/measurement', 'a+');
+$file = fopen(__DIR__ . '../../files/temp/measurement.txt', 'a+');
+
+
 $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
