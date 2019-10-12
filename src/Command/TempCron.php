@@ -24,7 +24,9 @@ $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
 {
-    var_dump(shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave'),preg_match('/t=\d+',shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave')));
+    $result = shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave');
+    preg_match('/t=\d+', $result, $matches);
+    var_dump(shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave'), $matches);
     $content .= preg_match('/t=\d+/',shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave')) / 1000 . ',';
 }
 
