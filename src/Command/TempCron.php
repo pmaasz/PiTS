@@ -13,17 +13,13 @@ $sensors = preg_split('/\s+/', $sensors);
 
 foreach($sensors as $key => $sensor)
 {
-    if($sensor === "w1_bus_master1")
+    if($sensor === "w1_bus_master1" || $sensor === "")
     {
         unset($sensors[$key]);
     }
 }
 
-var_dump($sensors);
-
-$file = fopen(__DIR__ . '../../files/temp/measurement.txt', 'a+');
-
-
+$file = fopen(__DIR__ . '../../files/temp', 'a+');
 $content = uniqid() . ',';
 
 foreach($sensors as $sensor)
