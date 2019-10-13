@@ -11,34 +11,22 @@ session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Service\HTTP\Request;
+use App\Service\HTTP\Response;
 use App\Service\ConfigService;
 
 ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
 $controllerName = "OverviewController";
 $actionName = "indexAction";
-
-if(isset($_GET['controller']))
-{
-    $controllerName = $_GET['controller'];
-}
-
-if(isset($_GET['action']))
-{
-    $actionName = $_GET['action'];
-}
-
-$request = Request::createFromGlobals();
-
+$controllerName = $_GET['controller'];
+$actionName = $_GET['action'];
+$request = new Request();
 /** @var mixed $controller */
 $controllerName = 'App\\Controller\\' . $controllerName;
 /** @var mixed $controller */
 $controller = new $controllerName();
-/**
- * @var Response $response
- */
+/** @var Response $response */
 $response = $controller->$actionName($request);
 
 $response->send();

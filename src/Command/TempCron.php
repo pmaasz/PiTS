@@ -7,27 +7,34 @@
  * License
  */
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+$createDate = date('Y-m-d H:i:s');
+$sensors = shell_exec('ls /sys/bus/w1/devices');
+$sensors = preg_split('/\s+/', $sensors);
 
-use App\Service\ConfigService;
-
-ConfigService::getInstance()->load(__DIR__ . '/../../config/config.json');
-
-$parameters = [
-    "createDate" => date('Y-m-d H:i:s'),
-];
-$sensors = ConfigService::getInstance()->get('sensors');
-$parameters['tempIn'] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensors['temp1'] . '/w1_slave') / 1000;
-$parameters['tempOut'] = escapeshellcmd('cat /sys/bus/w1/devices/' . $sensors['temp2'] . '/w1_slave') / 1000;
-$config = ConfigService::getInstance()->get('database');
-$connection = new PDO(sprintf("%s:host=%s;dbname=%s", $config['driver'], $config['host'], $config['dbname']), $config['user'], $config['password']);
-$query = "INSERT INTO dataset SET tempIn = :tempIn, tempOut = :tempOut, createDate = :createDate, writeDate = :writeDate";
-$statement = $connection->prepare($query);
-$parameters['writeDate'] = date('Y-m-d H:i:s');
-
-foreach($parameters as $key => $value)
+foreach($sensors as $key => $sensor)
 {
-    $statement->bindValue(':' . $key, $value);
+    if($sensor === "w1_bus_master1" || $sensor === "")
+    {
+        unset($sensors[$key]);
+    }
 }
 
-$statement->execute();
+$file = __DIR__ . '/../../files/measurement.txt';
+$content = uniqid() . ',';
+
+foreach($sensors as $sensor)
+{
+    $result = shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave');
+
+    preg_match('/t=\d+/', $result, $matches);
+
+    $content .= trim($matches[0], 't=') / 1000 . ',';
+}
+
+$content .= $createDate . ',';
+$writeDate = date('Y-m-d H:i:s');
+$content .= $writeDate . ';';
+
+file_put_contents($file, $content, FILE_APPEND);
+
+exit;

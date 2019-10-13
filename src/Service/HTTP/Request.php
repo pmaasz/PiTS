@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\HTTP;
+namespace App\Service\HTTP;
 
-use App\Services\HTTP\ParameterBag;
+use App\Service\HTTP\ParameterBag;
 
 /**
  * Class Request
  *
- * @package App\Services\HTTP
+ * @package App\Service\HTTP
  */
 class Request
 {

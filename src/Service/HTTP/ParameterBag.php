@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\HTTP;
+namespace App\Service\HTTP;
 
 /**
  * Class ParameterBag
- * @package App\Services\HTTP
+ * @package App\Service\HTTP
  */
 class ParameterBag
 {

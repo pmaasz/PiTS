@@ -7,4 +7,6 @@
 /csv/
 /.DS_Store
 /vendor/
-/downloads/csv/
+/files/csv/
+/files/temp/view/
+/measurement.txt
