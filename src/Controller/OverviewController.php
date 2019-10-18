@@ -9,11 +9,10 @@
 
 Namespace App\Controller;
 
-use App\Entity\Dataset;
 use App\Repository\DatasetRepository;
-use App\Service\ExportService;
 use App\Service\Templating;
 use App\Service\HTTP\Response;
+use App\Driver\CSVDriver;
 
 /**
  * Class OverviewController
@@ -22,15 +21,18 @@ use App\Service\HTTP\Response;
  */
 class OverviewController
 {
+    const CSV_DIR = __DIR__ . '/../../files/csv/';
+    const FILE_FORMAT = 'Y-m-d_H-i-s_';
+
     /**
      * @var DatasetRepository
      */
     private $datasetRepository;
 
     /**
-     * @var ExportService
+     * @var CSVDriver
      */
-    private $exportService;
+    private $csvDriver;
 
     /**
      * OverviewController constructor.
@@ -38,7 +40,7 @@ class OverviewController
     public function __construct()
     {
         $this->datasetRepository = new DatasetRepository();
-        $this->exportService = new ExportService();
+        $this->csvDriver = new CSVDriver();
     }
 
     /**
@@ -46,7 +48,7 @@ class OverviewController
      */
     public function indexAction()
     {
-        $datasets = $this->getDatasets();
+        $datasets = $this->datasetRepository->getDatasets();
 
         return new Response(Templating::getInstance()->render('overview.php', [
             'datasets' => $datasets
@@ -54,19 +56,19 @@ class OverviewController
     }
 
     /**
-     * @return bool|Response
+     * @return Response
      */
     public function downloadAction()
     {
-        $datasets = $this->getDatasets();
+        $datasets = $this->datasetRepository->getDatasets();
 
         if ($datasets)
         {
-            $fileName = date(ExportService::FILE_FORMAT) . '.csv';
+            $fileName = date(self::FILE_FORMAT) . '.csv';
 
-            $this->exportService->export($datasets, $fileName);
+            $this->csvDriver->export($datasets, self::CSV_DIR . $fileName);
 
-            $filePath = ExportService::CSV_DIR;
+            $filePath = self::CSV_DIR;
             $fileSize = filesize($filePath . $fileName);
             $mimeType = 'text/csv';
 
@@ -85,36 +87,4 @@ class OverviewController
 
         return new Response('');
     }
-
-    /**
-     * @return array
-     */
-    private function getDatasets()
-    {
-        $measurement = '/var/www/PiTS/files/temp/measurement.txt';
-        $view = '/var/www/PiTS/files/temp/view/view';
-
-        shell_exec('cp ' . $measurement . ' ' . $view);
-
-        $measurement = fopen($view, 'r');
-        $results = explode(';', $measurement);
-        $datasets = [];
-
-        foreach($results as $result)
-        {
-            $data = explode(',', $result);
-            $dataset = new Dataset();
-
-            $dataset->setId($data[0]);
-            $dataset->setTempIn($data[1]);
-            $dataset->setTempOut($data[2]);
-            $dataset->setCreateDate($data[3]);
-            $dataset->setWriteDate($data[4]);
-
-            $datasets[] = $dataset;
-        }
-
-        return $datasets;
-    }
-
 }
