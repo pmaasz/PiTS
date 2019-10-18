@@ -64,8 +64,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach($datasets as $dataset)
-                { ?>
+                <?php foreach($datasets as $dataset){ ?>
                     <tr>
                         <td><?= $dataset->getId();?></td>
                         <td><?= $dataset->getTempIn();?></td>

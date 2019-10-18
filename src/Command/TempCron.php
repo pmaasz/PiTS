@@ -7,10 +7,7 @@
  * License
  */
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 $createDate = date('Y-m-d H:i:s');
-$csvDriver = new \App\Driver\CSVDriver();
 $sensors = shell_exec('ls /sys/bus/w1/devices');
 $sensors = preg_split('/\s+/', $sensors);
 
