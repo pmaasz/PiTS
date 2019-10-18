@@ -27,9 +27,7 @@ class Templating
         ob_start();
         extract($parameters);
 
-        if(!is_dir(__DIR__ . '/../../templates/')){
-            include __DIR__ . '/../../templates/' . $template;
-        }
+        include __DIR__ . '/../../templates/' . $template;
 
         $content = ob_get_clean();
 

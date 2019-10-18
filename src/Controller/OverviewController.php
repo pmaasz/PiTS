@@ -48,10 +48,10 @@ class OverviewController
      */
     public function indexAction()
     {
-        $datasets = $this->datasetRepository->getDatasets();
+        //$datasets = $this->datasetRepository->getDatasets();
 
         return new Response(Templating::getInstance()->render('overview.php', [
-            'datasets' => $datasets
+            'datasets' => []//$datasets
         ]));
     }
 

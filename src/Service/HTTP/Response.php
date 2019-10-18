@@ -2,7 +2,7 @@
 
 namespace App\Service\HTTP;
 
-use App\Services\HTTP\ResponseInterface;
+use App\Service\HTTP\ResponseInterface;
 
 /**
  * Class Response

@@ -57,7 +57,7 @@ class DatasetRepository
      */
     public function getDatasets()
     {
-        $measurement = '/var/www/PiTS/files/temp/measurement.txt';
+        $measurement = '/var/www/PiTS/files/measurements/measurement.csv';
         $id = uniqid();
         $view = '/var/www/PiTS/files/temp/view/view' . $id . '.txt';
 

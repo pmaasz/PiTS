@@ -19,8 +19,17 @@ ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
 $controllerName = "OverviewController";
 $actionName = "indexAction";
-$controllerName = $_GET['controller'];
-$actionName = $_GET['action'];
+
+if(isset($_GET['controller']))
+{
+    $controllerName = $_GET['controller'];
+}
+
+if(isset($_GET['action']))
+{
+    $actionName = $_GET['action'];
+}
+
 $request = new Request();
 /** @var mixed $controller */
 $controllerName = 'App\\Controller\\' . $controllerName;
