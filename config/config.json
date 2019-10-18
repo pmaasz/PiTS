@@ -5,10 +5,5 @@
     "password": "",
     "dbname": "pits",
     "host": "localhost"
-  },
-
-  "sensors":{
-    "temp1": "",
-    "temp2": ""
   }
 }

@@ -53,11 +53,45 @@ class DatasetRepository
     }
 
     /**
+     * @return array
+     */
+    public function getDatasets()
+    {
+        $measurement = '/var/www/PiTS/files/temp/measurement.txt';
+        $id = uniqid();
+        $view = '/var/www/PiTS/files/temp/view/view' . $id . '.txt';
+
+        shell_exec('cp ' . $measurement . ' ' . $view);
+
+        $measurement = fopen($view, 'r');
+        $results = explode(';', $measurement);
+        $datasets = [];
+
+        foreach($results as $result)
+        {
+            $data = explode(',', $result);
+            $dataset = new Dataset();
+
+            $dataset->setId($data[0]);
+            $dataset->setTempIn($data[1]);
+            $dataset->setTempOut($data[2]);
+            $dataset->setCreateDate($data[3]);
+            $dataset->setWriteDate($data[4]);
+
+            $datasets[] = $dataset;
+        }
+
+        shell_exec('rm -rf ' . $view);
+
+        return $datasets;
+    }
+
+    /**
      * @param $data
      *
      * @return Dataset
      */
-    public function arrayToObject($data)
+    private function arrayToObject($data)
     {
         $issue = new Dataset();
 

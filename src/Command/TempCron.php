@@ -19,22 +19,40 @@ foreach($sensors as $key => $sensor)
     }
 }
 
-$file = __DIR__ . '/../../files/measurement.txt';
-$content = uniqid() . ',';
-
-foreach($sensors as $sensor)
+if(count($sensors) > 0)
 {
-    $result = shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave');
+    $date = date('Y-m-d');
+    $file = __DIR__ . '/../../files/measurements/measurement' . $date . '.csv';
+    $content[] = uniqid();
 
-    preg_match('/t=\d+/', $result, $matches);
+    foreach($sensors as $key => $sensor)
+    {
+        $result = shell_exec('cat /sys/bus/w1/devices/' . $sensor . '/w1_slave');
 
-    $content .= trim($matches[0], 't=') / 1000 . ',';
+        preg_match('/t=\d+/', $result, $matches);
+
+        $content[] = trim($matches[0], 't=') / 1000;
+    }
+
+    $content[] = $createDate;
+    $content[] = date('Y-m-d H:i:s');
+
+    ob_start();
+
+    if(!is_file($file))
+    {
+        $header = [ "ID", "TempIn", "TempOut", "createDate", "writeDate" ];
+        $csv = fopen($file, 'w');
+
+        fputcsv($csv, $header);
+        fputcsv($csv, $content);
+    } else {
+        $csv = fopen($file, 'a+');
+
+        fputcsv($csv, $content);
+    }
+
+    fclose($csv);
+    ob_get_clean();
 }
-
-$content .= $createDate . ',';
-$writeDate = date('Y-m-d H:i:s');
-$content .= $writeDate . ';';
-
-file_put_contents($file, $content, FILE_APPEND);
-
 exit;
