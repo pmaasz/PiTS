@@ -41,7 +41,7 @@ if(count($sensors) > 0)
     $content[] = date('Y-m-d H:i:s');
 
     ob_start();
-    
+
     if(!is_file($file))
     {
         $header = [ "ID", "TempIn", "TempOut", "createDate", "writeDate" ];
