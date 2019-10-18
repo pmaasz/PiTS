@@ -66,10 +66,9 @@ class OverviewController
         {
             $fileName = date(self::FILE_FORMAT) . '.csv';
 
-            $this->csvDriver->export($datasets, self::CSV_DIR . $fileName);
+            $this->csvDriver->writeNewFile($datasets, self::CSV_DIR . $fileName);
 
-            $filePath = self::CSV_DIR;
-            $fileSize = filesize($filePath . $fileName);
+            $fileSize = filesize(self::CSV_DIR . $fileName);
             $mimeType = 'text/csv';
 
             header("Pragma: public");
@@ -77,10 +76,10 @@ class OverviewController
             header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
             header("Cache-Control: private",false);
             header("Content-Type: $mimeType");
-            header('Content-Disposition: attachment; filename="'. $fileName .'"');
+            header('Content-Disposition: attachment; filename="' . $fileName . '"');
             header("Content-Transfer-Encoding: binary");
             header("Content-Length: " . $fileSize);
-            readfile($filePath.$fileName);
+            readfile(self::CSV_DIR . $fileName);
 
             return new Response('');
         }
