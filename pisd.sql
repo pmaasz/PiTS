@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `pits`
+-- Datenbank: `pisd`
 --
 
 -- --------------------------------------------------------
@@ -27,8 +27,8 @@ SET time_zone = "+00:00";
 --
 -- Tabellenstruktur für Tabelle `dataset`
 --
--- Fehler beim Lesen der Struktur von Tabelle pits.dataset: #1932 - Table 'pits.dataset' doesn't exist in engine
--- Fehler beim Lesen der Daten von Tabelle pits.dataset: #1064 - Fehler in der SQL-Syntax. Bitte die korrekte Syntax im Handbuch nachschlagen bei 'FROM `pits`.`dataset`' in Zeile 1
+-- Fehler beim Lesen der Struktur von Tabelle pisd.dataset: #1932 - Table 'pisd.dataset' doesn't exist in engine
+-- Fehler beim Lesen der Daten von Tabelle pisd.dataset: #1064 - Fehler in der SQL-Syntax. Bitte die korrekte Syntax im Handbuch nachschlagen bei 'FROM `pisd`.`dataset`' in Zeile 1
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

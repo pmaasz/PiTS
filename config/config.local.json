@@ -6,5 +6,8 @@
     "dbname": "pisd",
     "table": "temperature",
     "host": "localhost"
+  },
+  "sensor": {
+    "docroot": "/sys/bus/w1/devices/"
   }
 }
