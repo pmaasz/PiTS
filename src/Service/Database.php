@@ -33,6 +33,19 @@ class Database
     }
 
     /**
+     * @return bool
+     */
+    public function isConnected()
+    {
+        if(($this->connection !== null || $this->connection !== '') && $this->connection)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param $query
      * @param array $parameters
      *
