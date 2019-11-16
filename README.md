@@ -33,6 +33,8 @@ composer install
 ### 4 Configure Database
 
 Configure the config.json file in the config/ directory. 
+Create a database with one table containing the fields id, temp1, temp2 and createDate.
+All fields should be of the type varchar 255.
 
 ### 5 Create Directories For Files
 
