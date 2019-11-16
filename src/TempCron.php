@@ -22,7 +22,7 @@ function main()
         $content[] = $createDate;
         $content[] = date('Y-m-d H:i:s');
 
-        if(\App\Service\Database::getInstance()->isConnected())
+        if(\App\Service\Database::getInstance()->isConnected() && false)
         {
             migrateFilesToDatabase('../../files/measurements');
 
@@ -32,9 +32,13 @@ function main()
                 'temp2' => $content[2],
                 'createDate' => $content[3],
             ]);
+
+            return;
         }
 
-        writeToFile($content, $sensorCount);;
+        writeToFile($content, $sensorCount);
+
+        return;
     }
 }
 
@@ -88,7 +92,7 @@ function writeToFile(array $content, $sensorCount)
     ob_start();
 
     $date = date('Y-m-d');
-    $file = __DIR__ . '/../../files/measurements/measurement' . $date . '.csv';
+    $file = __DIR__ . '/../files/measurements/measurement' . $date . '.csv';
 
     if(!is_file($file))
     {
