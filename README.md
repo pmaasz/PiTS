@@ -30,8 +30,28 @@ Then run the following command in the docroot of this project:
 composer install
 ````
 
+### 4 Configure Database
+
+Configure the config.json file in the config/ directory. 
+
+### 5 Create Directories For Files
+
+Create the following directories to enable downloads and csv backups when the Database connection is not working:
+
+<li>
+    create a directory named "files" in the docroot of PiTS
+</li>
+<li>
+    create a directory named "measurements" in the files directory
+</li>
+<li>
+    create a directory named "downloads" in the files directory
+</li>
+
 ### possible new features: 
 - no more composer by adding an autoloader to the project
-- a docker environment
-- setup service to create the database and to detect the sensors
+- setup service to detect the sensors
 - different sensor support
+- FileService 
+- MigrationService
+- csv downloads
