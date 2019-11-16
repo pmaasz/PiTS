@@ -1,5 +1,4 @@
 /.idea/
-/config/config.local.json
 /.DS_Store
 /vendor/
-/files/measurements/
+/files/
