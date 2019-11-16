@@ -22,9 +22,8 @@ function main()
 
         if(\App\Service\Database::getInstance()->isConnected())
         {
-            \App\Service\Database::getInstance()->insert("INSERT ", $content);
-
             //$this->migrateFilesToDatabase();
+            \App\Service\Database::getInstance()->insert("INSERT ", $content);
 
             return;
         }
@@ -122,27 +121,59 @@ function createFileHeader($sensorCount)
     return $header;
 }
 
+/**
+ *
+ */
 function migrateFilesToDatabase()
 {
-    $file = '';
+    $files = [];
+    
+    foreach($files as $file)
+    {
+        $file = '';
+        $csvContent = $this->readFile($file);
 
-    $content = $this->readFile($file);
+        foreach($csvContent as $content)
+        {
+            \App\Service\Database::getInstance()->insert("INSERT ", $content);
+        }
 
-    \App\Service\Database::getInstance()->insert("INSERT ", $content);
-
-    $this->cleanUp();
+        $this->deleteFile($file);
+    }
 }
 
+/**
+ * @param string $file
+ *
+ * @return array
+ */
 function readFile($file)
 {
+    ob_start();
+
     $content = [];
+
+    if(is_file($file))
+    {
+        $csv = fopen($file, 'o');
+        $content = fgetcsv($csv);
+
+        fclose($csv);
+    }
+
+    ob_get_clean();
 
     return $content;
 }
 
-function cleanUp()
+/**
+ * @param $file
+ */
+function deleteFile($file)
 {
 
 }
+
+\App\Service\ConfigService::getInstance()->load('/../../config/config.json');
 
 $this->main();
