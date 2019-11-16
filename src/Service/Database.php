@@ -19,9 +19,17 @@ class Database
     use Singleton;
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $connection;
+
+    /**
+     * Database constructor.
+     */
+    protected function __construct()
+    {
+        $this->connect();
+    }
 
     /**
      * connects to Database
@@ -29,6 +37,7 @@ class Database
     private function connect()
     {
         $config = ConfigService::getInstance()->get('database');
+
         try{
             $this->connection = new PDO($this->getDSN($config), $config['user'], $config['password']);
         } catch (\Exception $ex){
@@ -87,14 +96,6 @@ class Database
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Database constructor.
-     */
-    protected function __construct()
-    {
-        $this->connect();
     }
 
     /**
