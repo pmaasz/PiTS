@@ -9,6 +9,8 @@ class FileService
 {
     use Singleton;
 
+    const FILES_BASE_DIR = __DIR__ . '/../files/measurements/';
+
     /**
      * @param array $content
      * @param $sensorCount
@@ -20,11 +22,11 @@ class FileService
         ob_start();
 
         $date = date('Y-m-d');
-        $file = FILES_BASE_DIR . 'measurement' . $date . '.csv';
+        $file = self::FILES_BASE_DIR . 'measurement' . $date . '.csv';
 
         if(!is_file($file))
         {
-            $header = createFileHeader($sensorCount);
+            $header = $this->createFileHeader($sensorCount);
             $csv = fopen($file, 'w');
 
             fputcsv($csv, $header);
@@ -54,14 +56,14 @@ class FileService
                     continue;
                 }
 
-                $csvContent = parseCsv(FILES_BASE_DIR . $file);
+                $csvContent = $this->parseCsv(self::FILES_BASE_DIR . $file);
 
                 foreach($csvContent as $content)
                 {
-                    writeToDatabase($content);
+                    \App\Service\Database::getInstance()->writeToDatabase($content);
                 }
 
-                deleteFile($file);
+                $this->deleteFile($file);
             }
         }
     }
