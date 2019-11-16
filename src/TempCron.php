@@ -69,7 +69,7 @@ function getSensorData(array $content, array $sensors)
 
         preg_match('/t=\d+/', $result, $matches);
 
-        $content[] = trim($matches[0], 't=') / 1000;
+        $content[] = trim($matches[0], 't=');
     }
 
     return $content;
