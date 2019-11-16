@@ -29,7 +29,13 @@ class Database
     private function connect()
     {
         $config = ConfigService::getInstance()->get('database');
-        $this->connection = new PDO($this->getDSN($config), $config['user'], $config['password']);
+        try{
+            $this->connection = new PDO($this->getDSN($config), $config['user'], $config['password']);
+        } catch (\Exception $ex){
+            return false;
+        }
+
+        return true;
     }
 
     /**
