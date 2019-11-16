@@ -7,31 +7,25 @@
  * License
  */
 
+const FILES_BASE_DIR = __DIR__ . '/../files/measurements/';
+
 function main()
 {
     $createDate = date('Y-m-d H:i:s');
-    $sensors = [2,4];//getSensors();
+    $sensors = getSensors();
     $sensorCount = count($sensors);
 
     if($sensorCount > 0)
     {
         $content[] = uniqid();
-        $content[] = "test1";
-        $content[] = "test2";
-        //$content = getSensorData($content, $sensors);
+        $content = getSensorData($content, $sensors);
         $content[] = $createDate;
         $content[] = date('Y-m-d H:i:s');
 
-        if(\App\Service\Database::getInstance()->isConnected() && false)
+        if(\App\Service\Database::getInstance()->isConnected())
         {
-            migrateFilesToDatabase('../../files/measurements');
-
-            \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
-                'id' => $content[0],
-                'temp1' => $content[1],
-                'temp2' => $content[2],
-                'createDate' => $content[3],
-            ]);
+            migrateFilesToDatabase(FILES_BASE_DIR);
+            writeToDatabase($content);
 
             return;
         }
@@ -83,6 +77,20 @@ function getSensorData(array $content, array $sensors)
 
 /**
  * @param array $content
+ * @return mixed
+ */
+function writeToDatabase(array $content)
+{
+    return \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
+        'id' => $content[0],
+        'temp1' => $content[1],
+        'temp2' => $content[2],
+        'createDate' => $content[3],
+    ]);
+}
+
+/**
+ * @param array $content
  * @param $sensorCount
  *
  * @return false|string
@@ -92,7 +100,7 @@ function writeToFile(array $content, $sensorCount)
     ob_start();
 
     $date = date('Y-m-d');
-    $file = __DIR__ . '/../files/measurements/measurement' . $date . '.csv';
+    $file = FILES_BASE_DIR . 'measurement' . $date . '.csv';
 
     if(!is_file($file))
     {
@@ -146,16 +154,11 @@ function migrateFilesToDatabase($files)
                 continue;
             }
 
-            $csvContent = parseCsv($file);
+            $csvContent = parseCsv(FILES_BASE_DIR . $file);
 
             foreach($csvContent as $content)
             {
-                \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
-                    'id' => $content[0],
-                    'temp1' => $content[1],
-                    'temp2' => $content[2],
-                    'createDate' => $content[3],
-                ]);
+                writeToDatabase($content);
             }
 
             deleteFile($file);
