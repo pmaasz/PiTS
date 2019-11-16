@@ -12,13 +12,13 @@ require __DIR__ . '/../vendor/autoload.php';
 \App\Service\ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
 $createDate = date('Y-m-d H:i:s');
-$sensors = \App\Service\TemperatureSensorService::getInstance()->getSensors();
+$sensors = \App\Service\TemperatureSensor::getInstance()->getSensors();
 $sensorCount = count($sensors);
 
 if($sensorCount > 0)
 {
     $content[] = uniqid();
-    $content = \App\Service\TemperatureSensorService::getInstance()->getSensorData($content, $sensors);
+    $content = \App\Service\TemperatureSensor::getInstance()->getSensorData($content, $sensors);
     $content[] = $createDate;
     $content[] = date('Y-m-d H:i:s');
 
