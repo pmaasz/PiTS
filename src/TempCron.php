@@ -10,27 +10,31 @@
 function main()
 {
     $createDate = date('Y-m-d H:i:s');
-    $sensors = $this->getSensors();
+    $sensors = [2,4];//getSensors();
     $sensorCount = count($sensors);
 
     if($sensorCount > 0)
     {
         $content[] = uniqid();
-        $content = $this->getSensorData($content, $sensors);
+        $content[] = "test1";
+        $content[] = "test2";
+        //$content = getSensorData($content, $sensors);
         $content[] = $createDate;
         $content[] = date('Y-m-d H:i:s');
 
         if(\App\Service\Database::getInstance()->isConnected())
         {
-            //$this->migrateFilesToDatabase();
-            \App\Service\Database::getInstance()->insert("INSERT ", $content);
+            migrateFilesToDatabase('../../files/measurements');
 
-            return;
+            \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
+                'id' => $content[0],
+                'temp1' => $content[1],
+                'temp2' => $content[2],
+                'createDate' => $content[3],
+            ]);
         }
 
-        $this->writeToFile($content, $sensorCount);
-
-        return;
+        writeToFile($content, $sensorCount);;
     }
 }
 
@@ -76,6 +80,8 @@ function getSensorData(array $content, array $sensors)
 /**
  * @param array $content
  * @param $sensorCount
+ *
+ * @return false|string
  */
 function writeToFile(array $content, $sensorCount)
 {
@@ -86,7 +92,7 @@ function writeToFile(array $content, $sensorCount)
 
     if(!is_file($file))
     {
-        $header = $this->createFileHeader($sensorCount);
+        $header = createFileHeader($sensorCount);
         $csv = fopen($file, 'w');
 
         fputcsv($csv, $header);
@@ -98,7 +104,8 @@ function writeToFile(array $content, $sensorCount)
     }
 
     fclose($csv);
-    ob_get_clean();
+
+    return ob_get_clean();
 }
 
 /**
@@ -122,58 +129,78 @@ function createFileHeader($sensorCount)
 }
 
 /**
- *
+ * @param string $files
  */
-function migrateFilesToDatabase()
+function migrateFilesToDatabase($files)
 {
-    $files = [];
-    
-    foreach($files as $file)
+    if (is_dir($files))
     {
-        $file = '';
-        $csvContent = $this->readFile($file);
-
-        foreach($csvContent as $content)
+        foreach(scandir($files) as $file)
         {
-            \App\Service\Database::getInstance()->insert("INSERT ", $content);
+            if ('..' === $file || '.' === $file)
+            {
+                continue;
+            }
+
+            $csvContent = parseCsv($file);
+
+            foreach($csvContent as $content)
+            {
+                \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
+                    'id' => $content[0],
+                    'temp1' => $content[1],
+                    'temp2' => $content[2],
+                    'createDate' => $content[3],
+                ]);
+            }
+
+            deleteFile($file);
         }
-
-        $this->deleteFile($file);
     }
-}
-
-/**
- * @param string $file
- *
- * @return array
- */
-function readFile($file)
-{
-    ob_start();
-
-    $content = [];
-
-    if(is_file($file))
-    {
-        $csv = fopen($file, 'o');
-        $content = fgetcsv($csv);
-
-        fclose($csv);
-    }
-
-    ob_get_clean();
-
-    return $content;
 }
 
 /**
  * @param $file
+ *
+ * @return array
+ */
+function parseCsv($file)
+{
+    $content = utf8_encode(file_get_contents($file));
+    $dataRows = explode("\n", $content);
+    $result = [];
+    array_shift($dataRows);
+
+    foreach ($dataRows as $key => $dataRow)
+    {
+        if ('' === trim($dataRow))
+        {
+            continue;
+        }
+
+        $result[] = str_getcsv($dataRow, ',', '"');
+    }
+
+    return $result;
+}
+
+/**
+ * @param $file
+ *
+ * @return bool
  */
 function deleteFile($file)
 {
+    if (is_file($file))
+    {
+        return unlink($file);
+    }
 
+    return false;
 }
 
-\App\Service\ConfigService::getInstance()->load('/../../config/config.json');
+require __DIR__.'/../vendor/autoload.php';
 
-$this->main();
+\App\Service\ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
+
+main();
