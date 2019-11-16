@@ -79,6 +79,20 @@ class Database
     }
 
     /**
+     * @param array $content
+     * @return mixed
+     */
+    public function writeToDatabase(array $content)
+    {
+        return \App\Service\Database::getInstance()->insert("INSERT INTO pits SET id = :id, temp1 = :temp1, temp2 = :temp2, createDate = :createDate", [
+            'id' => $content[0],
+            'temp1' => $content[1],
+            'temp2' => $content[2],
+            'createDate' => $content[3],
+        ]);
+    }
+
+    /**
      * @param $query
      * @param array $parameters
      *
