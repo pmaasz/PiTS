@@ -206,7 +206,7 @@ function deleteFile($file)
     return false;
 }
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 \App\Service\ConfigService::getInstance()->load(__DIR__ . '/../config/config.json');
 
